@@ -15,6 +15,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				docs/index.html,
+				docs/screenshots/detail.png,
+				docs/screenshots/explore.png,
+				docs/screenshots/gallery.png,
 				Info.plist,
 			);
 			target = B10000000000000000000006 /* HoroyoiApp */;

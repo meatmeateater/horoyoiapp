@@ -259,29 +259,6 @@
       font-size: 0.94rem;
     }
 
-    .screenshot-slot {
-      aspect-ratio: 9 / 16;
-      border-radius: 20px;
-      border: 1.5px dashed var(--surface-border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 18px;
-      color: var(--text-secondary);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .screenshot-slot code {
-      margin-top: 8px;
-      padding: 3px 9px;
-      border-radius: 8px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.78rem;
-    }
-
     footer {
       padding: 44px 0 56px;
       text-align: center;
@@ -384,24 +361,24 @@
     </section>
 
     <section>
-      <h2 class="section-title">實機畫面展示區（預留圖片位置）</h2>
-      <p class="section-subtitle">待圖片補齊後，可將模擬器截圖放至 <code>HoroyoiApp/docs/screenshots/</code> 並替換下方預留框。</p>
+      <h2 class="section-title">實機畫面展示</h2>
+      <p class="section-subtitle">實際於 iPhone 模擬器執行之高畫質介面預覽。</p>
       <div class="grid-3">
-        <div class="screenshot-slot">
-          <strong>Tab 1 · 微醉故事</strong>
-          <span>置頂標題、橫向分頁與 Mood Stories</span>
-          <code>explore.png</code>
-        </div>
-        <div class="screenshot-slot">
-          <strong>Detail · 風味筆記與濾鏡</strong>
-          <span>瓶身飄浮動畫與即時濾鏡調整</span>
-          <code>detail.png</code>
-        </div>
-        <div class="screenshot-slot">
-          <strong>Tab 3 · 微醺寫真與影音</strong>
-          <span>雙欄寫真牆、AsyncImage 與影片播放器</span>
-          <code>gallery.png</code>
-        </div>
+        <figure class="glass-card" style="padding: 12px; text-align: center;">
+          <img src="screenshots/explore.png" alt="Tab 1 · 微醉故事" loading="lazy" style="width: 100%; border-radius: 16px; display: block; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);">
+          <figcaption style="margin-top: 12px; font-size: 0.95rem; font-weight: 700;">Tab 1 · 微醉故事</figcaption>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">置頂標題、橫向分頁與 Mood Stories</p>
+        </figure>
+        <figure class="glass-card" style="padding: 12px; text-align: center;">
+          <img src="screenshots/detail.png" alt="Detail · 風味筆記與濾鏡" loading="lazy" style="width: 100%; border-radius: 16px; display: block; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);">
+          <figcaption style="margin-top: 12px; font-size: 0.95rem; font-weight: 700;">Detail · 風味筆記與濾鏡</figcaption>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">瓶身飄浮動畫與即時濾鏡調整</p>
+        </figure>
+        <figure class="glass-card" style="padding: 12px; text-align: center;">
+          <img src="screenshots/gallery.png" alt="Tab 3 · 微醺寫真與影音" loading="lazy" style="width: 100%; border-radius: 16px; display: block; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);">
+          <figcaption style="margin-top: 12px; font-size: 0.95rem; font-weight: 700;">Tab 3 · 微醺寫真與影音</figcaption>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">雙欄寫真牆、AsyncImage 與影片播放器</p>
+        </figure>
       </div>
     </section>
 
