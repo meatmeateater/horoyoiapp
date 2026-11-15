@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ほろよい 微醉手記 — Suntory Horoyoi Interactive iOS eBook App</title>
+  <style>
+    :root {
+      --bg: #fffaf7;
+      --surface: rgba(255, 255, 255, 0.72);
+      --surface-border: rgba(45, 34, 48, 0.09);
+      --text-primary: #261d29;
+      --text-secondary: #685c6c;
+      --accent: #e87a90;
+      --accent-soft: rgba(232, 122, 144, 0.14);
+      --lavender: #9575cd;
+      --peach: #ffab91;
+      --sky: #6baed6;
+      --shadow: 0 20px 50px rgba(84, 52, 74, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17131c;
+        --surface: rgba(38, 31, 46, 0.76);
+        --surface-border: rgba(255, 255, 255, 0.12);
+        --text-primary: #f6eff8;
+        --text-secondary: #b8acbf;
+        --accent: #f497ac;
+        --accent-soft: rgba(244, 151, 172, 0.18);
+        --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "PingFang TC", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(244, 143, 177, 0.24), transparent 42%),
+        radial-gradient(circle at 88% 18%, rgba(107, 174, 214, 0.20), transparent 40%),
+        radial-gradient(circle at 75% 84%, rgba(149, 117, 205, 0.18), transparent 45%),
+        var(--bg);
+      color: var(--text-primary);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 44px;
+      align-items: center;
+      padding: 36px 0 64px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+      line-height: 1.22;
+      margin: 18px 0 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 .abv {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 6px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(90deg, var(--accent), var(--lavender));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--lavender));
+      color: #ffffff;
+      box-shadow: 0 12px 26px rgba(232, 122, 144, 0.28);
+    }
+
+    .btn-glass {
+      background: var(--surface);
+      border-color: var(--surface-border);
+      color: var(--text-primary);
+      backdrop-filter: blur(18px);
+    }
+
+    .glass-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .device-preview {
+      position: relative;
+      padding: 24px;
+      border-radius: 34px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px);
+    }
+
+    .device-screen {
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background 0.35s ease, filter 0.35s ease;
+    }
+
+    .flavor-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .flavor-tab {
+      border: 1px solid var(--surface-border);
+      background: var(--surface);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .flavor-tab.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    section {
+      padding: 40px 0;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 26px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      background: var(--accent-soft);
+      margin-bottom: 14px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+    }
+
+    .screenshot-slot {
+      aspect-ratio: 9 / 16;
+      border-radius: 20px;
+      border: 1.5px dashed var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .screenshot-slot code {
+      margin-top: 8px;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+    }
+
+    footer {
+      padding: 44px 0 56px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 880px) {
+      .hero, .grid-3, .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding-top: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <div class="brand">
+        <span>🫧</span>
+        <span>ほろよい 微醉手記</span>
+      </div>
+      <span class="pill">iOS 27 · iPadOS 27 · Swift 6</span>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <span class="pill">Suntory Horoyoi Interactive eBook</span>
+        <h1>
+          <span class="abv">3%</span> 的溫柔微醺，<br>
+          <span class="gradient-text">留給今晚的自己</span>
+        </h1>
+        <p>
+          專為 iPhone 與 iPad 打造的 SwiftUI 互動電子書，收錄 6 款經典與期間限定口味、IG 風格微醺生活故事、即時濾鏡試色，以及 iOS 原生 WebKit 與 AVKit 影音體驗。
+        </p>
+        <div class="hero-actions">
+          <a href="#features" class="btn btn-primary">探索應用亮點</a>
+          <a href="https://www.suntory.com.tw/Alcohol/horoyoi/" target="_blank" rel="noopener" class="btn btn-glass">前往三得利官網 ↗</a>
+        </div>
+      </div>
+
+      <div class="device-preview">
+        <div id="previewScreen" class="device-screen">
+          <div>
+            <span id="previewTag" class="pill">經典常態 · ALC. 3%</span>
+            <h2 id="previewTitle" style="margin-top: 14px; font-size: 1.7rem;">白色沙瓦</h2>
+            <p id="previewJp" style="color: var(--text-secondary); font-size: 0.92rem;">白いサワー</p>
+          </div>
+          <div style="margin: 22px 0;">
+            <p id="previewDesc" style="font-size: 0.95rem; color: var(--text-primary);">
+              酸甜乳酸交織微氣泡的經典白晝滋味，溫潤順口不膩。
+            </p>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary);">
+            <span id="previewSweet">甜度 ★★★★☆</span>
+            <span id="previewAsset">can_white_sour</span>
+          </div>
+        </div>
+        <div class="flavor-tabs" id="flavorTabs"></div>
+      </div>
+    </header>
+
+    <section id="features">
+      <h2 class="section-title">核心 SwiftUI 互動體驗</h2>
+      <p class="section-subtitle">採用最新 Swift 6 與 iOS 27 / iPadOS 27 規範建構，兼顧流暢動畫與深淺色適應設計。</p>
+      <div class="grid-3">
+        <article class="glass-card feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>複合滾動手記</h3>
+          <p>結合置頂 Section Header、水平分頁輪播、以及垂直 feed 內的 IG Style 微醺生活限時動態。</p>
+        </article>
+        <article class="glass-card feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>動態微醺濾鏡與轉場</h3>
+          <p>支援瓶身飄浮動畫、<code>.symbolEffect</code> 互動圖示、非對稱彈簧轉場筆記，以及即時色相／飽和度濾鏡。</p>
+        </article>
+        <article class="glass-card feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>自適應 iPad 側邊欄</h3>
+          <p>使用現代 <code>Tab</code> 與 <code>.tabViewStyle(.sidebarAdaptable)</code>，在 iPhone 與 iPad 皆提供最佳導覽。</p>
+        </article>
+        <article class="glass-card feature-card">
+          <div class="feature-icon">🖼️</div>
+          <h3>寫真牆與官方海報</h3>
+          <p>兩欄式 <code>LazyVGrid</code> 生活寫真牆搭配 <code>AsyncImage</code> 階段狀態處理，呈現官方線上畫報。</p>
+        </article>
+        <article class="glass-card feature-card">
+          <div class="feature-icon">🎬</div>
+          <h3>AVKit 品牌微電影</h3>
+          <p>內建 <code>VideoPlayer</code> 播放機制與優雅的資源預留卡片，放入 <code>horoyoi_cm.mp4</code> 即可播放。</p>
+        </article>
+        <article class="glass-card feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>原生 SwiftUI WebView</h3>
+          <p>直接使用 <code>import WebKit</code> 的原生 <code>WebView(url:)</code>，支援手勢返回與直連三得利微醉台灣官網。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">實機畫面展示區（預留圖片位置）</h2>
+      <p class="section-subtitle">待圖片補齊後，可將模擬器截圖放至 <code>HoroyoiApp/docs/screenshots/</code> 並替換下方預留框。</p>
+      <div class="grid-3">
+        <div class="screenshot-slot">
+          <strong>Tab 1 · 微醉故事</strong>
+          <span>置頂標題、橫向分頁與 Mood Stories</span>
+          <code>explore.png</code>
+        </div>
+        <div class="screenshot-slot">
+          <strong>Detail · 風味筆記與濾鏡</strong>
+          <span>瓶身飄浮動畫與即時濾鏡調整</span>
+          <code>detail.png</code>
+        </div>
+        <div class="screenshot-slot">
+          <strong>Tab 3 · 微醺寫真與影音</strong>
+          <span>雙欄寫真牆、AsyncImage 與影片播放器</span>
+          <code>gallery.png</code>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>提醒您：禁止酒駕・未滿十八歲請勿飲酒。此專案為 SwiftUI 互動電子書展示作品。</p>
+    </footer>
+  </div>
+
+  <script>
+    const flavors = [
+      { name: "白色沙瓦", jp: "白いサワー", tag: "經典常態 · ALC. 3%", desc: "酸甜乳酸交織微氣泡的經典白晝滋味，溫潤順口不膩。", sweet: "甜度 ★★★★☆", asset: "can_white_sour", bg: "linear-gradient(145deg, rgba(107, 174, 214, 0.30), rgba(255, 255, 255, 0.16))" },
+      { name: "白桃", jp: "もも", tag: "經典常態 · ALC. 3%", desc: "宛如咬下熟成水蜜桃般的芳醇甘甜，充滿柔和春意。", sweet: "甜度 ★★★★★", asset: "can_peach", bg: "linear-gradient(145deg, rgba(244, 143, 177, 0.32), rgba(255, 224, 230, 0.18))" },
+      { name: "葡萄沙瓦", jp: "ぶどう", tag: "經典常態 · ALC. 3%", desc: "深邃多汁的葡萄果韻與綿密氣泡，柔和點亮深夜電影時光。", sweet: "甜度 ★★★★☆", asset: "can_grape", bg: "linear-gradient(145deg, rgba(149, 117, 205, 0.32), rgba(225, 190, 231, 0.18))" },
+      { name: "葡萄柚", jp: "グレープフルーツ", tag: "經典常態 · ALC. 3%", desc: "微苦果皮與清爽柑橘酸度的大人系節奏，最適合搭餐解膩。", sweet: "甜度 ★★☆☆☆", asset: "can_grapefruit", bg: "linear-gradient(145deg, rgba(255, 138, 101, 0.32), rgba(255, 224, 178, 0.18))" },
+      { name: "草莓沙瓦", jp: "いちご", tag: "期間限定 · ALC. 3%", desc: "春季限定的酸甜莓果粉紅微氣泡，宛如初戀般輕盈。", sweet: "甜度 ★★★★☆", asset: "can_strawberry", bg: "linear-gradient(145deg, rgba(236, 64, 122, 0.30), rgba(248, 187, 208, 0.20))" },
+      { name: "荔枝沙瓦", jp: "ライチ", tag: "期間限定 · ALC. 3%", desc: "初夏限定的清透玉荷包花果芬芳，冰鎮飲用透涼清爽。", sweet: "甜度 ★★★★☆", asset: "can_lychee", bg: "linear-gradient(145deg, rgba(77, 182, 172, 0.30), rgba(178, 223, 219, 0.18))" }
+    ];
+
+    const tabs = document.getElementById("flavorTabs");
+    const screen = document.getElementById("previewScreen");
+    const tag = document.getElementById("previewTag");
+    const title = document.getElementById("previewTitle");
+    const jp = document.getElementById("previewJp");
+    const desc = document.getElementById("previewDesc");
+    const sweet = document.getElementById("previewSweet");
+    const asset = document.getElementById("previewAsset");
+
+    function selectFlavor(index) {
+      const f = flavors[index];
+      screen.style.background = f.bg;
+      tag.textContent = f.tag;
+      title.textContent = f.name;
+      jp.textContent = f.jp;
+      desc.textContent = f.desc;
+      sweet.textContent = f.sweet;
+      asset.textContent = f.asset;
+
+      [...tabs.children].forEach((btn, i) => {
+        btn.classList.toggle("active", i === index);
+      });
+    }
+
+    flavors.forEach((f, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "flavor-tab";
+      btn.textContent = f.name;
+      btn.addEventListener("click", () => selectFlavor(idx));
+      tabs.appendChild(btn);
+    });
+
+    selectFlavor(0);
+  </script>
+</body>
+</html>
