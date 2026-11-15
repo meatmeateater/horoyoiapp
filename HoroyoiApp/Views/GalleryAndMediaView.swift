@@ -166,10 +166,15 @@ struct GalleryAndMediaView: View {
     }
 
     private func prepareVideoPlayerIfNeeded() {
-        guard player == nil,
-              let videoURL = Bundle.main.url(forResource: "horoyoi_cm", withExtension: "mp4") else {
-            return
-        }
+        guard player == nil else { return }
+
+        let candidateNames = ["horoyoi_cm", "gemini_generated_video_331c824a"]
+        let videoURL = candidateNames
+            .compactMap { Bundle.main.url(forResource: $0, withExtension: "mp4") }
+            .first
+            ?? Bundle.main.urls(forResourcesWithExtension: "mp4", subdirectory: nil)?.first
+
+        guard let videoURL else { return }
         player = AVPlayer(url: videoURL)
     }
 }

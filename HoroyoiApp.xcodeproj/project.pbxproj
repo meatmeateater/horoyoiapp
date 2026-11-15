@@ -14,8 +14,8 @@
 		B10000000000000000000012 /* Exceptions for "HoroyoiApp" folder in "HoroyoiApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
 				docs/index.html,
+				Info.plist,
 			);
 			target = B10000000000000000000006 /* HoroyoiApp */;
 		};
@@ -100,7 +100,7 @@
 				};
 			};
 			buildConfigurationList = B10000000000000000000020 /* Build configuration list for PBXProject "HoroyoiApp" */;
-			developmentRegion = zh-Hant;
+			developmentRegion = "zh-Hant";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
